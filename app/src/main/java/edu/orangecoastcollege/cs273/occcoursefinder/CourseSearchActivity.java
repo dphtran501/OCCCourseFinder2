@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -59,6 +60,7 @@ public class CourseSearchActivity extends AppCompatActivity {
         // to populate the spinner.
         ArrayAdapter<String> instructorSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getInstructorNames());
         instructorSpinner.setAdapter(instructorSpinnerAdapter);
+        instructorSpinner.setOnItemSelectedListener(instructorSpinnerListener);
 
     }
 
@@ -119,8 +121,30 @@ public class CourseSearchActivity extends AppCompatActivity {
         public void afterTextChanged(Editable editable) {}
     };
 
-    //TODO (5): Create an AdapterView.OnItemSelectedListener named instructorSpinnerListener and implement
-    //TODO: the onItemSelected method to do the following:
-    //TODO: If the selectedInstructorName != "[Select Instructor]", clear the offeringListAdapter,
-    //TODO: then rebuild it with every Offering that has an instructor whose full name equals the one selected.
+    // Create an AdapterView.OnItemSelectedListener named instructorSpinnerListener and implement
+    // the onItemSelected method to do the following:
+    // If the selectedInstructorName != "[Select Instructor]", clear the offeringListAdapter,
+    // then rebuild it with every Offering that has an instructor whose full name equals the one selected.
+    public AdapterView.OnItemSelectedListener instructorSpinnerListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> spinner, View view, int i, long l)
+        {
+            // Retrieve the instructor name
+            String instructorName = String.valueOf(spinner.getItemAtPosition(i));
+            // Clear the adapter
+            offeringListAdapter.clear();
+            if (instructorName.equals("[Select Instructor]"))
+                offeringListAdapter.addAll(allOfferingsList);
+            else
+            {
+                for (Offering offering : allOfferingsList)
+                    if (offering.getInstructor().getFullName().equals(instructorName))
+                        offeringListAdapter.add(offering);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {}
+    };
+
 }

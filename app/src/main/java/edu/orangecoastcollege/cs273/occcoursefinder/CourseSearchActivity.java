@@ -14,7 +14,8 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseSearchActivity extends AppCompatActivity {
+public class CourseSearchActivity extends AppCompatActivity
+{
 
     private DBHelper db;
     private List<Instructor> allInstructorsList;
@@ -30,7 +31,8 @@ public class CourseSearchActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_search);
 
@@ -51,8 +53,7 @@ public class CourseSearchActivity extends AppCompatActivity {
 
 
         offeringsListView = (ListView) findViewById(R.id.offeringsListView);
-        offeringListAdapter =
-                new OfferingListAdapter(this, R.layout.offering_list_item, filteredOfferingsList);
+        offeringListAdapter = new OfferingListAdapter(this, R.layout.offering_list_item, filteredOfferingsList);
         offeringsListView.setAdapter(offeringListAdapter);
 
 
@@ -97,7 +98,8 @@ public class CourseSearchActivity extends AppCompatActivity {
     // If the entry is an empty String "", the offeringListAdapter should addAll from the allOfferingsList
     // Else, the offeringListAdapter should add each Offering whose course title starts with the entry.
 
-    public TextWatcher courseTitleTextWatcher = new TextWatcher() {
+    public TextWatcher courseTitleTextWatcher = new TextWatcher()
+    {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -125,7 +127,8 @@ public class CourseSearchActivity extends AppCompatActivity {
     // the onItemSelected method to do the following:
     // If the selectedInstructorName != "[Select Instructor]", clear the offeringListAdapter,
     // then rebuild it with every Offering that has an instructor whose full name equals the one selected.
-    public AdapterView.OnItemSelectedListener instructorSpinnerListener = new AdapterView.OnItemSelectedListener() {
+    public AdapterView.OnItemSelectedListener instructorSpinnerListener = new AdapterView.OnItemSelectedListener()
+    {
         @Override
         public void onItemSelected(AdapterView<?> spinner, View view, int i, long l)
         {

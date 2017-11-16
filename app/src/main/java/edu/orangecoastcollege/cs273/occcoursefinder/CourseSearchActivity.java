@@ -2,6 +2,8 @@ package edu.orangecoastcollege.cs273.occcoursefinder;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -50,16 +52,38 @@ public class CourseSearchActivity extends AppCompatActivity {
         offeringsListView.setAdapter(offeringListAdapter);
 
 
-        //TODO (1): Construct instructorSpinnerAdapter using the method getInstructorNames()
-        //TODO: to populate the spinner.
-
+        // Construct instructorSpinnerAdapter using the method getInstructorNames()
+        // to populate the spinner.
+        ArrayAdapter<String> instructorSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getInstructorNames());
+        instructorSpinner.setAdapter(instructorSpinnerAdapter);
 
     }
 
-    //TODO (2): Create a method getInstructorNames that returns a String[] containing the entry
-    //TODO: "[SELECT INSTRUCTOR]" at position 0, followed by all the full instructor names in the
-    //TODO: allInstructorsList
+    private String[] getInstructorNames()
+    {
+        String[] instructorNames = new String[allInstructorsList.size() + 1];
+        instructorNames[0] = "[Select Instructor]";
+        for (int i = 1; i < instructorNames.length; i++)
+        {
+            instructorNames[i] = allInstructorsList.get(i - 1).getFullName();
+        }
 
+        return instructorNames;
+    }
+
+    // Create a method getInstructorNames that returns a String[] containing the entry
+    // "[SELECT INSTRUCTOR]" at position 0, followed by all the full instructor names in the
+    // allInstructorsList
+    public void reset(View v)
+    {
+        // Set spinner back
+        instructorSpinner.setSelection(0);
+        courseTitleEditText.setText("");
+        // Clear out the list adapter
+        offeringListAdapter.clear();
+        // Repopulate it from allOfferingsList
+        offeringListAdapter.addAll(allOfferingsList);
+    }
 
     //TODO (3): Create a void method named reset that sets the test of the edit text back to an
     //TODO: empty string, sets the selection of the Spinner to 0 and clears out the offeringListAdapter,

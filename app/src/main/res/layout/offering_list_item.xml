@@ -22,7 +22,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/offeringListTitleTextView" />
 
-        <!--TODO (1): Add a TextView named offeringListCRNTextView to the layout underneath the offeringListCourseTitleTextView -->
+        <!-- Add a TextView named offeringListCRNTextView to the layout underneath the offeringListCourseTitleTextView -->
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/offeringListCRNTextView" />
 
     </LinearLayout>
 

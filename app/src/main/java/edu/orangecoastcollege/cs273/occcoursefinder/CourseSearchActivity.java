@@ -59,7 +59,8 @@ public class CourseSearchActivity extends AppCompatActivity
 
         // Construct instructorSpinnerAdapter using the method getInstructorNames()
         // to populate the spinner.
-        ArrayAdapter<String> instructorSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getInstructorNames());
+        ArrayAdapter<String> instructorSpinnerAdapter
+                = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getInstructorNames());
         instructorSpinner.setAdapter(instructorSpinnerAdapter);
         instructorSpinner.setOnItemSelectedListener(instructorSpinnerListener);
 
@@ -109,11 +110,17 @@ public class CourseSearchActivity extends AppCompatActivity
             String entry = charSequence.toString().trim().toUpperCase();
             // Clear the list adapter
             offeringListAdapter.clear();
+
+            // Selected Instructor name
+            String instructorName = instructorSpinner.getSelectedItem().toString();
+
             // Let's loop through Offerings
             for (Offering o : allOfferingsList)
             {
                 // If the course title starts with entry, add it back to the list adapter
-                if (o.getCourse().getTitle().toUpperCase().startsWith(entry))
+                if (o.getCourse().getTitle().toUpperCase().startsWith(entry)
+                        && (instructorName.equals("[Select Instructor]")
+                        || o.getInstructor().getFullName().equals(instructorName)))
                     offeringListAdapter.add(o);
             }
 
@@ -136,13 +143,15 @@ public class CourseSearchActivity extends AppCompatActivity
             String instructorName = String.valueOf(spinner.getItemAtPosition(i));
             // Clear the adapter
             offeringListAdapter.clear();
-            if (instructorName.equals("[Select Instructor]"))
-                offeringListAdapter.addAll(allOfferingsList);
-            else
+
+            String entry = courseTitleEditText.getText().toString().trim().toUpperCase();
+
+            for (Offering o : allOfferingsList)
             {
-                for (Offering offering : allOfferingsList)
-                    if (offering.getInstructor().getFullName().equals(instructorName))
-                        offeringListAdapter.add(offering);
+                if (o.getCourse().getTitle().toUpperCase().startsWith(entry)
+                        && (instructorName.equals("[Select Instructor]")
+                        || o.getInstructor().getFullName().equals(instructorName)))
+                    offeringListAdapter.add(o);
             }
         }
 
